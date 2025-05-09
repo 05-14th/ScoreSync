@@ -1,0 +1,14 @@
+<resources>
+    <string-array name="whistle_sounds">
+        <item>Whistle 1</item>
+        <item>Whistle 2</item>
+        <item>Whistle 3</item>
+    </string-array>
+
+    <string-array name="buzzer_sounds">
+        <item>Buzzer 1</item>
+        <item>Buzzer 2</item>
+        <item>Buzzer 3</item>
+        <item>Buzzer 4</item>
+    </string-array>
+</resources>

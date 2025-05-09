@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="16dp"
+    android:background="@drawable/bgimage"
+    tools:context=".MainActivity">
+
+    <!-- Menu button in top right (using AppCompat for better compatibility) -->
+    <ImageButton
+        android:id="@+id/menuButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="end"
+        android:src="@drawable/menu"
+        android:scaleType="fitCenter"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Menu" />
+
+    <!-- Team 1 Section -->
+    <TextView
+        android:id="@+id/team1Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Team 1"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp" />
+
+    <!-- Spacer between teams -->
+
+    <!-- Team 2 Section -->
+
+    <LinearLayout
+        android:layout_width="288dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/team1MinusButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/minus"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/team1Score"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="16dp"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            android:textSize="48sp" />
+
+        <Button
+            android:id="@+id/team1PlusButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/addblack"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="387dp" />
+
+    <TextView
+        android:id="@+id/team2Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Team 2"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/team2MinusButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/minus"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/team2Score"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="16dp"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            android:textSize="48sp" />
+
+        <Button
+            android:id="@+id/team2PlusButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/addblack"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+</LinearLayout>

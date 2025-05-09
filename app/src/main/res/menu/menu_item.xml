@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <!-- Back Button (Left Side) -->
+    <item
+        android:id="@+id/action_back"
+        android:icon="@drawable/baseline_back"
+        android:title="Back"
+        app:showAsAction="always"/>
+
+
+    <item
+        android:icon="@drawable/baseline_more_vert_24"
+        android:title="@string/appbar_title"
+        app:showAsAction="always">
+
+
+        <menu>
+            <item
+                android:id="@+id/android"
+                android:icon="@drawable/baseline_android"
+                android:title="@string/android_title"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/profile"
+                android:icon="@drawable/baseline_person"
+                android:title="@string/profile_title"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/download"
+                android:icon="@drawable/baseline_arrow_downward"
+                android:title="@string/download_title"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/setting"
+                android:icon="@drawable/baseline_settings"
+                android:title="@string/setting_title"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/exit"
+                android:icon="@drawable/baseline_exit"
+                android:title="@string/exit_title"
+                app:showAsAction="never" />
+        </menu>
+    </item>
+</menu>

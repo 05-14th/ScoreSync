@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/image"
+    android:padding="16dp">
+
+    <!-- [All your existing unchanged elements remain exactly the same...] -->
+    <!-- Menu Button -->
+    <ImageButton
+        android:id="@+id/menu_button"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/menu" />
+
+    <!-- Player Numbers -->
+    <TextView
+        android:id="@+id/tv_player1_number"
+        android:layout_width="39dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="828dp"
+        android:gravity="center"
+        android:rotation="180"
+        android:text="0"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/tv_player2_number"
+        android:layout_width="40dp"
+        android:layout_height="53dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="0dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp" />
+
+    <!-- Center Line -->
+
+    <!-- Timers -->
+
+    <ImageView
+        android:layout_width="3dp"
+        android:layout_height="200dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="430dp"
+        android:layout_marginTop="50dp"
+        android:rotation="270"
+        android:src="@drawable/dashed_line"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/tv_chess_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="127dp"
+        android:layout_marginEnd="210dp"
+        android:rotation="270"
+        android:text="5:00"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/tv_chess_timer2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="210dp"
+        android:layout_marginTop="127dp"
+        android:rotation="450"
+        android:text="5:00"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp" />
+
+    <!-- New Button Group Container -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp">
+
+        <!-- Horizontal group for Timer, Players Action, Restart -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- Timer Button -->
+            <ImageButton
+                android:id="@+id/btn_play_pause"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/timer" />
+
+            <!-- Vertical group for Action Buttons -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <!-- Players Action Button -->
+                <Button
+                    android:id="@+id/btn_player_action"
+                    android:layout_width="187dp"
+                    android:layout_height="40dp"
+                    android:text="Players Action"
+                    android:textSize="15sp" />
+
+                <!-- Add Players Button -->
+                <Button
+                    android:id="@+id/btn_add_players"
+                    android:layout_width="187dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Add Players"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <!-- Restart Button -->
+            <ImageButton
+                android:id="@+id/btn_restart"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/restart" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Bottom Controls (Whistle & Shuffle) -->
+</RelativeLayout>

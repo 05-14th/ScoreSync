@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ScoreSync2</string>
+    <string name="appbar_title">Appbar</string>
+    <string name="android_title">Android</string>
+    <string name="profile_title">Profile</string>
+    <string name="download_title">Download</string>
+    <string name="setting_title">Setting</string>
+    <string name="exit_title">Exit</string>
+</resources>

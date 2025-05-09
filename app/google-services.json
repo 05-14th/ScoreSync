@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "980879428847",
+    "project_id": "scoresync-a03d7",
+    "storage_bucket": "scoresync-a03d7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:980879428847:android:aeac4fce6061ce04675f1a",
+        "android_client_info": {
+          "package_name": "com.scoresync.scoresync2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_7n8hDR7Ma5t8pQBF-U6M2ReymQmNNvk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
