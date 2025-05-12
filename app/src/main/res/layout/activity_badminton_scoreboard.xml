@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,15 +8,21 @@
     android:padding="10dp">
 
     <!-- Best of Section (Top Left) -->
+
+    <!-- Menu Button (Top Right) -->
+
+
     <LinearLayout
         android:id="@+id/best_of_layout"
         android:layout_width="92dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/round_layout"
+        app:layout_constraintEnd_toStartOf="@+id/round_layout"
+        app:layout_constraintHorizontal_bias="0.026"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,28 +43,32 @@
             android:textSize="16sp" />
     </LinearLayout>
 
-    <!-- Menu Button (Top Right) -->
     <ImageButton
         android:id="@+id/menu_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/menu"
+        app:layout_constraintBottom_toBottomOf="@+id/best_of_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.971"
+        app:layout_constraintStart_toEndOf="@+id/round_layout"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TouchTargetSizeCheck" />
 
+    <!-- Bottom Controls (Left Side - Buzzer/Whistle) -->
 
     <LinearLayout
         android:id="@+id/round_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="103dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="37dp"
-        android:layout_marginEnd="406dp"
-        android:orientation="vertical">
+        android:layout_width="78dp"
+        android:layout_height="105dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/sets_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <TextView
             android:layout_width="wrap_content"
@@ -83,12 +94,14 @@
         android:id="@+id/team1_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/round_layout"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="112dp"
-        android:layout_marginTop="-79dp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/sets_layout"
+        app:layout_constraintEnd_toStartOf="@+id/sets_layout"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <Button
             android:id="@+id/plus_team1"
@@ -123,16 +136,20 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!-- Bottom Controls (Right Side - Shuffle) -->
+
     <LinearLayout
         android:id="@+id/team2_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/round_layout"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="-74dp"
-        android:layout_marginEnd="100dp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/team1_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toEndOf="@+id/sets_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -171,11 +188,13 @@
         android:id="@+id/sets_layout"
         android:layout_width="136dp"
         android:layout_height="91dp"
-        android:layout_below="@id/team1_layout"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="-3dp"
-        android:layout_marginEnd="363dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/playersActionButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.757">
 
         <TextView
             android:layout_width="wrap_content"
@@ -223,42 +242,14 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/player_buttons"
-        android:layout_width="881dp"
-        android:layout_height="118dp"
-        android:layout_below="@id/sets_layout"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/playersActionButton"
-            android:layout_width="187dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:text="Players Action"
-            android:textSize="15sp" />
-
-        <Button
-            android:id="@+id/addPlayersButton"
-            android:layout_width="187dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="Add Player"
-            android:textSize="15sp"/>
-    </LinearLayout>
-
-    <!-- Bottom Controls (Left Side - Buzzer/Whistle) -->
-    <LinearLayout
         android:id="@+id/left_controls"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/addPlayersButton"
+        app:layout_constraintEnd_toStartOf="@+id/playersActionButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/playersActionButton">
 
         <ImageButton
             android:id="@+id/buzzer_button"
@@ -274,21 +265,45 @@
             android:background="@drawable/whistle2" />
     </LinearLayout>
 
-    <!-- Bottom Controls (Right Side - Shuffle) -->
     <LinearLayout
         android:id="@+id/right_controls"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/shuffle_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/swap" />
     </LinearLayout>
-</RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/shuffle_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/swap"
+        app:layout_constraintBottom_toBottomOf="@+id/left_controls"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/addPlayersButton"
+        app:layout_constraintTop_toTopOf="@+id/playersActionButton" />
+
+    <Button
+        android:id="@+id/playersActionButton"
+        android:layout_width="187dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:text="Players Action"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/addPlayersButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/addPlayersButton"
+        android:layout_width="187dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:text="Add Player"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

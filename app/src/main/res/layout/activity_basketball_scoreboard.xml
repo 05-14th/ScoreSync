@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/basketballRootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,48 +9,65 @@
     android:padding="10dp">
 
     <!-- Shot Clock -->
+
+    <!-- Shot Clock Play Button -->
+
+    <!-- Menu Button -->
+
+    <!-- Left Side Add Buttons -->
+
+    <!-- Add this Right Side Add Buttons section right after your Left Side Add Buttons section -->
+
+
+    <!-- Whistle and Buzzer (Left) -->
+
+    <!-- Main Timer -->
+
+    <!-- Bottom Controls (Right Side - Shuffle) -->
+
     <TextView
         android:id="@+id/shot_clock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00:00"
-        android:textSize="25sp"
         android:textColor="#FFFFFF"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="18dp" />
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@+id/timer_container"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/play_shot_clock_button"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Shot Clock Play Button -->
     <ImageButton
         android:id="@+id/play_shot_clock_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_toEndOf="@id/shot_clock"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/play" />
+        android:background="@drawable/play"
+        app:layout_constraintBottom_toBottomOf="@+id/shot_clock"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Menu Button -->
     <ImageButton
         android:id="@+id/menu_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="22dp"
-        android:background="@drawable/menu" />
+        android:background="@drawable/menu"
+        app:layout_constraintBottom_toBottomOf="@+id/shot_clock"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/timer_container"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Left Side Add Buttons -->
     <LinearLayout
         android:id="@+id/plus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/shot_clock"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="41dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/plus_team2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/team2_layout">
 
         <!-- +1 Button -->
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -116,20 +134,46 @@
                 android:textColor="#FFFFFF"
                 android:textSize="18sp" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/minus_team1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/minus" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="-1"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+        </LinearLayout>
     </LinearLayout>
 
-    <!-- Add this Right Side Add Buttons section right after your Left Side Add Buttons section -->
     <LinearLayout
         android:id="@+id/plus_team2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/shot_clock"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="41dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/team1_layout"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shot_clock"
+        app:layout_constraintVertical_bias="0.35">
 
         <!-- +1 Button for Team 2 -->
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -196,21 +240,42 @@
                 android:textColor="#FFFFFF"
                 android:textSize="18sp" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/minus"
+                android:padding="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="-1"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+        </LinearLayout>
     </LinearLayout>
 
-
-    <!-- Whistle and Buzzer (Left) -->
-
-    <!-- Main Timer -->
     <LinearLayout
         android:id="@+id/whistle_buzzer_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/plus"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="53dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/add_player_button"
+        app:layout_constraintEnd_toStartOf="@+id/add_player_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/plus_team2">
 
         <ImageButton
             android:id="@+id/buzzer_button"
@@ -226,94 +291,100 @@
             android:background="@drawable/whistle2" />
     </LinearLayout>
 
-    <!-- Bottom Controls (Right Side - Shuffle) -->
     <LinearLayout
         android:id="@+id/right_controls"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/shuffle_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/swap" />
     </LinearLayout>
+
+    <!-- Period Section -->
+
+    <!-- Team 1 Layout -->
+
+    <!-- Team 2 Layout -->
+
+    <!-- Add Foul Button -->
+
+
+    <!-- Add Player Button -->
 
     <LinearLayout
         android:id="@+id/timer_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal"
+        android:layout_marginBottom="36dp"
         android:gravity="center"
-        android:padding="8dp">
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/period_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/start_timer_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginEnd="10dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/play"
             android:scaleType="fitCenter"
-            android:layout_marginEnd="10dp" />
+            android:src="@drawable/play" />
 
         <TextView
             android:id="@+id/main_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="12:00"
-            android:textSize="48sp"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="48sp" />
     </LinearLayout>
 
-    <!-- Period Section -->
     <LinearLayout
         android:id="@+id/period_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/timer_container"
-        android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:gravity="center">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/period_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="Periods:"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:gravity="center" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/period_counter"
             android:layout_width="60dp"
             android:layout_height="70dp"
-            android:text="1"
-            android:textSize="28sp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/shape"
-            android:textColor="#FFFFFF"
             android:gravity="center"
-            android:layout_marginTop="5dp" />
+            android:text="1"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp" />
     </LinearLayout>
 
-    <!-- Team 1 Layout -->
     <LinearLayout
         android:id="@+id/team1_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="50dp"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/period_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timer_container">
 
         <TextView
             android:id="@+id/team1_name"
@@ -339,22 +410,22 @@
             android:id="@+id/team1_foul_display"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="Fouls: 0"
             android:textColor="#FF0000"
-            android:textSize="18sp"
-            android:layout_marginTop="5dp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
-    <!-- Team 2 Layout -->
     <LinearLayout
         android:id="@+id/team2_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="150dp"
-        android:layout_marginTop="50dp"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/team1_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintStart_toEndOf="@+id/period_container">
 
         <TextView
             android:id="@+id/team2_name"
@@ -380,40 +451,48 @@
             android:id="@+id/team2_foul_display"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="Fouls: 0"
             android:textColor="#FF0000"
-            android:textSize="18sp"
-            android:layout_marginTop="5dp" />
+            android:textSize="18sp" />
     </LinearLayout>
-
-    <!-- Add Foul Button -->
-
-
-    <!-- Add Player Button -->
 
     <Button
         android:id="@+id/addFoulButton"
         android:layout_width="187dp"
         android:layout_height="40dp"
-        android:layout_below="@id/period_container"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="340dp"
+        android:layout_marginTop="44dp"
         android:background="@drawable/shape"
         android:text="Add Foul"
         android:textColor="#FFFFFF"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/period_container" />
 
     <Button
         android:id="@+id/add_player_button"
         android:layout_width="187dp"
         android:layout_height="40dp"
-        android:layout_below="@id/addFoulButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
         android:background="@drawable/shape"
         android:text="Add Player"
         android:textColor="#FFFFFF"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addFoulButton" />
 
-</RelativeLayout>
+    <ImageButton
+        android:id="@+id/shuffle_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/swap"
+        app:layout_constraintBottom_toBottomOf="@+id/add_player_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.816"
+        app:layout_constraintStart_toEndOf="@+id/add_player_button"
+        app:layout_constraintTop_toBottomOf="@+id/plus"
+        app:layout_constraintVertical_bias="0.666" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
