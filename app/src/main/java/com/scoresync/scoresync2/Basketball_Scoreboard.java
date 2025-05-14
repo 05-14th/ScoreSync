@@ -29,8 +29,12 @@ public class Basketball_Scoreboard extends AppCompatActivity {
     private ImageButton shuffleButton;
     private ImageButton startTimerButton;
     private CountDownTimer timer;
+    private CountDownTimer shotclocktimer;
+    private TextView shotclockview;
+    private final long INTERVAL = 100;
     private boolean timerRunning = false;
     private long timeLeftInMillis = 720000; // 12 minutes in milliseconds
+    private long shotclock = 24000;
 
     // Sound variables
     private SoundPool soundPool;
@@ -72,6 +76,7 @@ public class Basketball_Scoreboard extends AppCompatActivity {
         shuffleButton = findViewById(R.id.shuffle_button);
         team1Label = findViewById(R.id.team1_name);
         team2Label = findViewById(R.id.team2_name);
+        shotclockview = findViewById(R.id.shot_clock);
 
         // Initialize sounds
         initializeSounds();
@@ -135,7 +140,7 @@ public class Basketball_Scoreboard extends AppCompatActivity {
                 team1ScoreDisplay.setText(currentScore2);
                 team2ScoreDisplay.setText(currentScore1);
                 team1FoulDisplay.setText(currentFoul2);
-                team2ScoreDisplay.setText(currentFoul1);
+                team2FoulDisplay.setText(currentFoul1);
             } else {
                 // Revert back to original
                 team1Label.setText(currentTeam2); // (Or store original values)
@@ -143,11 +148,20 @@ public class Basketball_Scoreboard extends AppCompatActivity {
                 team1ScoreDisplay.setText(currentScore1);
                 team2ScoreDisplay.setText(currentScore2);
                 team1FoulDisplay.setText(currentFoul2);
-                team2ScoreDisplay.setText(currentFoul1);
+                team2FoulDisplay.setText(currentFoul1);
             }
 
             // Toggle the state
             isShuffled = !isShuffled;
+        });
+
+        periodCounter.setOnClickListener(v -> {
+            if (period < 4) {
+                period += 1;
+            } else {
+                period = 1;
+            }
+            periodCounter.setText(String.valueOf(period));  // Convert int to String
         });
     }
 
@@ -214,8 +228,11 @@ public class Basketball_Scoreboard extends AppCompatActivity {
         startTimerButton.setOnClickListener(v -> {
             if (timerRunning) {
                 pauseTimer();
+                pauseShotClock();
             } else {
                 startTimer();
+                resetShotClock(); // Reset shot clock when main timer starts
+                startShotClock();
             }
         });
     }
@@ -248,6 +265,51 @@ public class Basketball_Scoreboard extends AppCompatActivity {
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
         String timeLeftFormatted = String.format("%02d:%02d", minutes, seconds);
         mainTimer.setText(timeLeftFormatted);
+    }
+
+    private void updateShotClockDisplay(){
+        int seconds = (int) (shotclock/1000);
+        String shotClockLeft = String.format("%02d", seconds);
+        shotclockview.setText(shotClockLeft);
+    }
+
+    private void startShotClock() {
+        shotclocktimer = new CountDownTimer(shotclock, INTERVAL) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                shotclock = millisUntilFinished;
+                updateShotClockDisplay();
+            }
+
+            @Override
+            public void onFinish() {
+                shotclock = 0;
+                updateShotClockDisplay();
+                // Handle what happens when shot clock expires
+                shotClockExpired();
+            }
+        }.start();
+    }
+
+    private void resetShotClock() {
+        if (shotclocktimer != null) {
+            shotclocktimer.cancel();
+        }
+        shotclock = 24000; // Reset to 24 seconds
+        updateShotClockDisplay();
+    }
+
+    // Call this when the game is paused
+    private void pauseShotClock() {
+        if (shotclocktimer != null) {
+            shotclocktimer.cancel();
+        }
+    }
+
+    // Handle what happens when shot clock expires
+    private void shotClockExpired() {
+        // Example: play a sound, show a message, etc.
+        playPeriodEndSound();
     }
 
     private void startTimer() {
@@ -326,6 +388,9 @@ public class Basketball_Scoreboard extends AppCompatActivity {
         }
         if (timer != null) {
             timer.cancel();
+        }
+        if (shotclocktimer != null) {
+            shotclocktimer.cancel();
         }
     }
 }

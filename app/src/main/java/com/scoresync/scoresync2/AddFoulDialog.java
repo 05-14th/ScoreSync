@@ -32,8 +32,8 @@ public class AddFoulDialog extends Dialog {
     private String selectedSigmaPlayer = "";
     private List<String> skibidiPlayers = new ArrayList<>();
     private List<String> sigmaPlayers = new ArrayList<>();
-    private String team1Name = "Skibidi"; // Make these match your teams
-    private String team2Name = "Sigma";
+    private String team1Name = "Meliodas"; // Make these match your teams
+    private String team2Name = "Zeldris";
 
     public AddFoulDialog(@NonNull Context context) {
         super(context);
@@ -60,6 +60,7 @@ public class AddFoulDialog extends Dialog {
         Button btnAddSigmaFoul = findViewById(R.id.btnAddSigmaFoul);
         Button btnSave = findViewById(R.id.btnSaveFouls);
         Button btnClose = findViewById(R.id.btnCloseFouls);
+
 
 
         // Load players from Firestore

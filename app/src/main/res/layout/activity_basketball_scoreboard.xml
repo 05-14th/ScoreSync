@@ -29,22 +29,26 @@
         android:id="@+id/shot_clock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00:00"
+        android:text="00"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/timer_container"
         app:layout_constraintEnd_toStartOf="@+id/timer_container"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/play_shot_clock_button"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/play_shot_clock_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginStart="16dp"
         android:background="@drawable/play"
         app:layout_constraintBottom_toBottomOf="@+id/shot_clock"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/shot_clock"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/menu_button"
@@ -62,10 +66,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/whistle_buzzer_left"
+        app:layout_constraintBottom_toBottomOf="@+id/team1_layout"
         app:layout_constraintEnd_toStartOf="@+id/team1_layout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shot_clock">
+        app:layout_constraintTop_toTopOf="@+id/team1_layout">
 
         <!-- +1 Button -->
 
@@ -166,10 +170,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/team1_layout"
+        app:layout_constraintBottom_toBottomOf="@+id/team2_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/team2_layout"
-        app:layout_constraintTop_toTopOf="@+id/team1_layout">
+        app:layout_constraintTop_toTopOf="@+id/team2_layout">
 
         <!-- +1 Button for Team 2 -->
 
@@ -273,8 +277,9 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/add_player_button"
         app:layout_constraintEnd_toStartOf="@+id/add_player_button"
+        app:layout_constraintHorizontal_bias="0.671"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/plus_team2">
+        app:layout_constraintTop_toTopOf="@+id/add_player_button">
 
         <ImageButton
             android:id="@+id/buzzer_button"
@@ -352,7 +357,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.386">
 
         <TextView
             android:id="@+id/period_label"
@@ -379,11 +385,15 @@
         android:id="@+id/team1_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:gravity="center"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/period_container"
         app:layout_constraintEnd_toStartOf="@+id/period_container"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timer_container">
+        app:layout_constraintTop_toBottomOf="@+id/timer_container"
+        app:layout_constraintVertical_bias="0.211">
 
         <TextView
             android:id="@+id/team1_name"
@@ -424,7 +434,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/team1_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.482"
-        app:layout_constraintStart_toEndOf="@+id/period_container">
+        app:layout_constraintStart_toEndOf="@+id/period_container"
+        app:layout_constraintTop_toTopOf="@+id/team1_layout">
 
         <TextView
             android:id="@+id/team2_name"
@@ -460,19 +471,21 @@
         android:id="@+id/addFoulButton"
         android:layout_width="187dp"
         android:layout_height="40dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/shape"
         android:text="Add Foul"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/add_player_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/period_container" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/add_player_button"
         android:layout_width="187dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/shape"
         android:text="Add Player"
         android:textColor="#FFFFFF"
@@ -480,7 +493,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addFoulButton" />
+        app:layout_constraintTop_toBottomOf="@+id/period_container"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
         android:id="@+id/shuffle_button"
@@ -489,9 +503,8 @@
         android:background="@drawable/swap"
         app:layout_constraintBottom_toBottomOf="@+id/add_player_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.816"
+        app:layout_constraintHorizontal_bias="0.273"
         app:layout_constraintStart_toEndOf="@+id/add_player_button"
-        app:layout_constraintTop_toBottomOf="@+id/plus"
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintTop_toTopOf="@+id/add_player_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
