@@ -1,20 +1,17 @@
 package com.scoresync.scoresync2;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import android.view.View;
+
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class Custimization extends AppCompatActivity {
+public class Customization extends AppCompatActivity {
 
     // basketball settings
     private EditText basketballTime;
@@ -26,19 +23,21 @@ public class Custimization extends AppCompatActivity {
     private EditText volleyballTieBreaker;
     private EditText volleyballTotalSets;
 
-    // Scripta Tehranv settings
+    // Sepak Takraw settings
     private EditText SepakPointsPerSet;
     private EditText SepakTotalSets;
 
     // Badminton settings
     private EditText badmintonPointsPerSet;
     private EditText badmintonRoundsPerMatch;
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_custimization);
+        setContentView(R.layout.activity_customization);
 
         // Initialize all views
         initializeViews();
@@ -49,6 +48,8 @@ public class Custimization extends AppCompatActivity {
         // Save button listener
         Button saveButton = findViewById(R.id.saveButton);
         saveButton.setOnClickListener(v -> saveSettings());
+
+
     }
 
 
@@ -176,8 +177,15 @@ public class Custimization extends AppCompatActivity {
         int volleyballTieBreakerValue = getCurrentValue(volleyballTieBreaker);
         int volleyballTotalSetsValue = getCurrentValue(volleyballTotalSets);
 
+        // Sepak Takraw settings
         int SepakPointsPerSetValue = getCurrentValue(SepakPointsPerSet);
         int SepakTotalSetsValue = getCurrentValue(SepakTotalSets);
+        getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE)
+                .edit()
+                .putInt("SEPAK_POINTS_PER_SET", SepakPointsPerSetValue)
+                .putInt("SEPAK_TOTAL_SETS", SepakTotalSetsValue)
+                .apply();
+
 
         int badmintonPointsPerSetValue = getCurrentValue(badmintonPointsPerSet);
         int badmintonRoundsPerMatchValue = getCurrentValue(badmintonRoundsPerMatch);
