@@ -1,0 +1,25 @@
+package com.scoresync.scoresync2;
+
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class SepakTakraw extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_sepaktakraw_scoreboard);
+        // Force landscape mode when entering the activity
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Reset to portrait when exiting the activity
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+}

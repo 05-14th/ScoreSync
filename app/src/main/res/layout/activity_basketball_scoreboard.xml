@@ -62,9 +62,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/plus_team2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/team2_layout">
+        app:layout_constraintBottom_toTopOf="@+id/whistle_buzzer_left"
+        app:layout_constraintEnd_toStartOf="@+id/team1_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shot_clock">
 
         <!-- +1 Button -->
 
@@ -165,12 +166,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/team1_layout"
-        app:layout_constraintHorizontal_bias="0.512"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shot_clock"
-        app:layout_constraintVertical_bias="0.35">
+        app:layout_constraintBottom_toBottomOf="@+id/team1_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/team2_layout"
+        app:layout_constraintTop_toTopOf="@+id/team1_layout">
 
         <!-- +1 Button for Team 2 -->
 
@@ -249,7 +248,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/minus_t2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="0dp"

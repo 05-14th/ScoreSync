@@ -49,6 +49,10 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
+            android:name=".SepakTakraw"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".SportSelection"
             android:exported="false" />
         <activity

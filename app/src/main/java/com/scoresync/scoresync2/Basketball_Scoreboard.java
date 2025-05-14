@@ -7,7 +7,6 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -24,7 +23,10 @@ public class Basketball_Scoreboard extends AppCompatActivity {
     private TextView team1FoulDisplay, team2FoulDisplay;
     private TextView team1ScoreDisplay, team2ScoreDisplay;
     private TextView periodCounter, mainTimer;
+    private TextView team1Label, team2Label;
+    private Button minusteam1, minusteam2;
     private Button addFoulButton;
+    private ImageButton shuffleButton;
     private ImageButton startTimerButton;
     private CountDownTimer timer;
     private boolean timerRunning = false;
@@ -41,6 +43,7 @@ public class Basketball_Scoreboard extends AppCompatActivity {
     private int team1Fouls = 0;
     private int team2Fouls = 0;
     private int period = 1;
+    private boolean isShuffled = false;
 
     // 🔑 Declare a gameId field so it can be reused across dialogs/features
     private String gameId;
@@ -64,6 +67,11 @@ public class Basketball_Scoreboard extends AppCompatActivity {
         periodCounter = findViewById(R.id.period_counter);
         mainTimer = findViewById(R.id.main_timer);
         startTimerButton = findViewById(R.id.start_timer_button);
+        minusteam1 = findViewById(R.id.minus_team1);
+        minusteam2 = findViewById(R.id.minus_t2);
+        shuffleButton = findViewById(R.id.shuffle_button);
+        team1Label = findViewById(R.id.team1_name);
+        team2Label = findViewById(R.id.team2_name);
 
         // Initialize sounds
         initializeSounds();
@@ -96,6 +104,50 @@ public class Basketball_Scoreboard extends AppCompatActivity {
                 updateFoulDisplays();
             });
             dialog.show();
+        });
+
+        minusteam1.setOnClickListener(v -> {
+            if(team1Score > 0){
+                team1Score -= 1;
+                updateScoreDisplays();
+            }
+        });
+
+        minusteam2.setOnClickListener(v -> {
+            if(team2Score > 0){
+                team2Score -= 1;
+                updateScoreDisplays();
+            }
+        });
+
+        shuffleButton.setOnClickListener(v -> {
+            String currentTeam1 = team1Label.getText().toString();
+            String currentTeam2 = team2Label.getText().toString();
+            String currentScore1 = Integer.toString(team1Score);
+            String currentScore2 = Integer.toString(team2Score);
+            String currentFoul1 = team1FoulDisplay.getText().toString();
+            String currentFoul2 = team2FoulDisplay.getText().toString();
+
+            if (!isShuffled) {
+                // Swap teams (shuffle)
+                team1Label.setText(currentTeam2);
+                team2Label.setText(currentTeam1);
+                team1ScoreDisplay.setText(currentScore2);
+                team2ScoreDisplay.setText(currentScore1);
+                team1FoulDisplay.setText(currentFoul2);
+                team2ScoreDisplay.setText(currentFoul1);
+            } else {
+                // Revert back to original
+                team1Label.setText(currentTeam2); // (Or store original values)
+                team2Label.setText(currentTeam1);
+                team1ScoreDisplay.setText(currentScore1);
+                team2ScoreDisplay.setText(currentScore2);
+                team1FoulDisplay.setText(currentFoul2);
+                team2ScoreDisplay.setText(currentFoul1);
+            }
+
+            // Toggle the state
+            isShuffled = !isShuffled;
         });
     }
 
