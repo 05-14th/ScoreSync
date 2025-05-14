@@ -143,7 +143,7 @@ public class Basketball_Scoreboard extends AppCompatActivity {
                 team1ScoreDisplay.setText(currentScore1);
                 team2ScoreDisplay.setText(currentScore2);
                 team1FoulDisplay.setText(currentFoul2);
-                team2ScoreDisplay.setText(currentFoul1);
+                team2FoulDisplay.setText(currentFoul1);
             }
 
             // Toggle the state
