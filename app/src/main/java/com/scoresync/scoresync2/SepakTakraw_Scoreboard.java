@@ -9,6 +9,17 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken;
+import com.scoresync.scoresync2.model.GameHistory;
+import com.google.gson.Gson;
+//import com.google.gson.reflect.TypeToken;
+import android.content.SharedPreferences;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.lang.reflect.Type;
+
 public class SepakTakraw_Scoreboard extends AppCompatActivity {
 
     private int sepakPointsPerSet = 10;
@@ -53,28 +64,48 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
         // for team 1
         plusTeam1.setOnClickListener(v -> {
             team1Points++;
+            team1Score.setText(String.valueOf(team1Points));
+            // Check if team1 wins the set/match
             if (team1Points >= sepakPointsPerSet) {
                 team1Sets++;
+                team1SetsView.setText(String.valueOf(team1Sets));
+                updateRoundCounter();
                 team1Points = 0;
                 team2Points = 0;
-                updateRoundCounter();
-                if (isMatchOver()) {
-                    String winner;
-                    if (team1Sets > team2Sets) {
-                        winner = "Team 1";
-                    } else if (team2Sets > team1Sets) {
-                        winner = "Team 2";
-                    } else {
-                        winner = "Draw";
-                    }
-                    Toast.makeText(this, winner + " Wins!", Toast.LENGTH_LONG).show();
+                team1Score.setText("0");
+                team2Score.setText("0");
+                // Check if team1 wins the match
+                if (team1Sets == setsToWin) {
+                    String team1Name = ((TextView) findViewById(R.id.team1_name)).getText().toString().trim();
+                    String team2Name = ((TextView) findViewById(R.id.team2_name)).getText().toString().trim();
+                    if (team1Name.isEmpty()) team1Name = "Team 1";
+                    if (team2Name.isEmpty()) team2Name = "Team 2";
+                    String winner = team1Name;
+
+                    GameHistory history = new GameHistory();
+                    history.team1Name = team1Name;
+                    history.team2Name = team2Name;
+                    history.team1Score = team1Sets;
+                    history.team2Score = team2Sets;
+                    history.team1Sets = team1Sets;
+                    history.team2Sets = team2Sets;
+                    history.sportType = "Sepak Takraw";
+                    history.date = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
+                    history.winner = winner;
+
+                    SharedPreferences prefs = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE);
+                    Gson gson = new Gson();
+                    String json = prefs.getString("GAME_HISTORY_LIST", "[]");
+                    Type type = new com.google.gson.reflect.TypeToken<ArrayList<GameHistory>>(){}.getType();
+                    ArrayList<GameHistory> historyList = gson.fromJson(json, type);
+                    if (historyList == null) historyList = new ArrayList<>();
+                    historyList.add(history);
+                    prefs.edit().putString("GAME_HISTORY_LIST", gson.toJson(historyList)).apply();
+
+                    Toast.makeText(this, winner + " wins the match!", Toast.LENGTH_LONG).show();
                     resetScoreboard(team1Score, team2Score, team1SetsView, team2SetsView);
-                    return;
                 }
             }
-            team1Score.setText(String.valueOf(team1Points));
-            team2Score.setText(String.valueOf(team2Points));
-            team1SetsView.setText(String.valueOf(team1Sets));
         });
 
         minusTeam1.setOnClickListener(v -> {
@@ -87,28 +118,48 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
         // for team 2
         plusTeam2.setOnClickListener(v -> {
             team2Points++;
+            team2Score.setText(String.valueOf(team2Points));
+            // Check if team2 wins the set/match
             if (team2Points >= sepakPointsPerSet) {
                 team2Sets++;
+                team2SetsView.setText(String.valueOf(team2Sets));
+                updateRoundCounter();
                 team1Points = 0;
                 team2Points = 0;
-                updateRoundCounter();
-                if (isMatchOver()) {
-                    String winner;
-                    if (team1Sets > team2Sets) {
-                        winner = "Team 1";
-                    } else if (team2Sets > team1Sets) {
-                        winner = "Team 2";
-                    } else {
-                        winner = "Draw";
-                    }
-                    Toast.makeText(this, winner + " Wins!", Toast.LENGTH_LONG).show();
+                team1Score.setText("0");
+                team2Score.setText("0");
+                // Check if team2 wins the match
+                if (team2Sets == setsToWin) {
+                    String team1Name = ((TextView) findViewById(R.id.team1_name)).getText().toString().trim();
+                    String team2Name = ((TextView) findViewById(R.id.team2_name)).getText().toString().trim();
+                    if (team1Name.isEmpty()) team1Name = "Team 1";
+                    if (team2Name.isEmpty()) team2Name = "Team 2";
+                    String winner = team2Name;
+
+                    GameHistory history = new GameHistory();
+                    history.team1Name = team1Name;
+                    history.team2Name = team2Name;
+                    history.team1Score = team1Sets;
+                    history.team2Score = team2Sets;
+                    history.team1Sets = team1Sets;
+                    history.team2Sets = team2Sets;
+                    history.sportType = "Sepak Takraw";
+                    history.date = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
+                    history.winner = winner;
+
+                    SharedPreferences prefs = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE);
+                    Gson gson = new Gson();
+                    String json = prefs.getString("GAME_HISTORY_LIST", "[]");
+                    Type type = new com.google.gson.reflect.TypeToken<ArrayList<GameHistory>>(){}.getType();
+                    ArrayList<GameHistory> historyList = gson.fromJson(json, type);
+                    if (historyList == null) historyList = new ArrayList<>();
+                    historyList.add(history);
+                    prefs.edit().putString("GAME_HISTORY_LIST", gson.toJson(historyList)).apply();
+
+                    Toast.makeText(this, winner + " wins the match!", Toast.LENGTH_LONG).show();
                     resetScoreboard(team1Score, team2Score, team1SetsView, team2SetsView);
-                    return;
                 }
             }
-            team1Score.setText(String.valueOf(team1Points));
-            team2Score.setText(String.valueOf(team2Points));
-            team2SetsView.setText(String.valueOf(team2Sets));
         });
 
         minusTeam2.setOnClickListener(v -> {
