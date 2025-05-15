@@ -21,7 +21,7 @@ public class History extends AppCompatActivity {
     private RecyclerView rvHistory;
     private TextView tvEmptyHistory;
     private HistoryAdapter adapter;
-    private ArrayList<GameHistory> historyList = new ArrayList<>();
+    private List<GameHistory> historyList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,30 +31,14 @@ public class History extends AppCompatActivity {
         rvHistory = findViewById(R.id.rvHistory);
         tvEmptyHistory = findViewById(R.id.tvEmptyHistory);
 
-        // Setup RecyclerView
         rvHistory.setLayoutManager(new LinearLayoutManager(this));
         adapter = new HistoryAdapter(historyList, history -> {
-            // Handle view click
-            // You can implement details viewing here
+            // Handle view click if needed
         });
         rvHistory.setAdapter(adapter);
 
-        // Load saved games
         loadHistory();
     }
-
-    /*private void loadHistory() {
-        // Here you would load from SharedPreferences or database
-        // This is just sample data
-        if (historyList.isEmpty()) {
-            tvEmptyHistory.setVisibility(View.VISIBLE);
-            rvHistory.setVisibility(View.GONE);
-        } else {
-            tvEmptyHistory.setVisibility(View.GONE);
-            rvHistory.setVisibility(View.VISIBLE);
-            adapter.notifyDataSetChanged();
-        }
-    }*/
 
     private void loadHistory() {
         SharedPreferences prefs = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE);
@@ -63,7 +47,18 @@ public class History extends AppCompatActivity {
         Type type = new TypeToken<ArrayList<GameHistory>>(){}.getType();
         List<GameHistory> loadedList = gson.fromJson(json, type);
         historyList.clear();
-        if (loadedList != null) historyList.addAll(loadedList);
+        if (loadedList != null) {
+            // Ensure no null/empty team names
+            for (GameHistory history : loadedList) {
+                if (history.getTeam1() == null || history.getTeam1().trim().isEmpty()) {
+                    history.setTeam1("Team 1");
+                }
+                if (history.getTeam2() == null || history.getTeam2().trim().isEmpty()) {
+                    history.setTeam2("Team 2");
+                }
+            }
+            historyList.addAll(loadedList);
+        }
 
         if (historyList.isEmpty()) {
             tvEmptyHistory.setVisibility(View.VISIBLE);

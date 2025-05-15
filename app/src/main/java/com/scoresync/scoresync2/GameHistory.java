@@ -21,6 +21,8 @@ public class GameHistory implements Serializable {
         this.team2Score = team2Score;
     }
 
+
+
     // Getters
     public String getTeam1() { return team1; }
     public String getTeam2() { return team2; }
@@ -28,4 +30,11 @@ public class GameHistory implements Serializable {
     public String getDate() { return date; }
     public int getTeam1Score() { return team1Score; }
     public int getTeam2Score() { return team2Score; }
+    public void setTeam1(String team1) {
+        this.team1 = team1;
+    }
+    public void setTeam2(String team2) {
+        this.team2 = team2;
+    }
+
 }

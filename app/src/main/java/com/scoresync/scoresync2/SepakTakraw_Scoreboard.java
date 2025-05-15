@@ -9,10 +9,9 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken;
-import com.scoresync.scoresync2.model.GameHistory;
 import com.google.gson.Gson;
-//import com.google.gson.reflect.TypeToken;
+import com.scoresync.scoresync2.model.GameHistory;
+
 import android.content.SharedPreferences;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,17 +38,15 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
         roundCounter = findViewById(R.id.round_counter);
         bestOfCounter = findViewById(R.id.best_of_counter);
 
-        // Read total sets from SharedPreferences
         totalSets = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE)
-                .getInt("SEPAK_TOTAL_SETS", 5); // fallback default
+                .getInt("SEPAK_TOTAL_SETS", 5);
         setsToWin = (totalSets / 2) + 1;
         bestOfCounter.setText(String.valueOf(totalSets));
 
-        // Force landscape mode when entering the activity
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         sepakPointsPerSet = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE)
-                .getInt("SEPAK_POINTS_PER_SET", 10); // 10 is the fallback default
+                .getInt("SEPAK_POINTS_PER_SET", 10);
 
         TextView team1Score = findViewById(R.id.team1_score);
         TextView team2Score = findViewById(R.id.team2_score);
@@ -61,11 +58,9 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
         Button plusTeam2 = findViewById(R.id.plus_team2);
         Button minusTeam2 = findViewById(R.id.minus_team2);
 
-        // for team 1
         plusTeam1.setOnClickListener(v -> {
             team1Points++;
             team1Score.setText(String.valueOf(team1Points));
-            // Check if team1 wins the set/match
             if (team1Points >= sepakPointsPerSet) {
                 team1Sets++;
                 team1SetsView.setText(String.valueOf(team1Sets));
@@ -74,7 +69,6 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
                 team2Points = 0;
                 team1Score.setText("0");
                 team2Score.setText("0");
-                // Check if team1 wins the match
                 if (team1Sets == setsToWin) {
                     String team1Name = ((TextView) findViewById(R.id.team1_name)).getText().toString().trim();
                     String team2Name = ((TextView) findViewById(R.id.team2_name)).getText().toString().trim();
@@ -83,15 +77,15 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
                     String winner = team1Name;
 
                     GameHistory history = new GameHistory();
-                    history.team1Name = team1Name;
-                    history.team2Name = team2Name;
-                    history.team1Score = team1Sets;
-                    history.team2Score = team2Sets;
-                    history.team1Sets = team1Sets;
-                    history.team2Sets = team2Sets;
-                    history.sportType = "Sepak Takraw";
-                    history.date = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
-                    history.winner = winner;
+                    history.setTeam1Name(team1Name);
+                    history.setTeam2Name(team2Name);
+                    history.setTeam1Score(team1Sets);
+                    history.setTeam2Score(team2Sets);
+                    history.setTeam1Sets(team1Sets);
+                    history.setTeam2Sets(team2Sets);
+                    history.setSportType("Sepak Takraw");
+                    history.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date()));
+                    history.setWinner(winner);
 
                     SharedPreferences prefs = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE);
                     Gson gson = new Gson();
@@ -115,11 +109,9 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
             }
         });
 
-        // for team 2
         plusTeam2.setOnClickListener(v -> {
             team2Points++;
             team2Score.setText(String.valueOf(team2Points));
-            // Check if team2 wins the set/match
             if (team2Points >= sepakPointsPerSet) {
                 team2Sets++;
                 team2SetsView.setText(String.valueOf(team2Sets));
@@ -128,7 +120,6 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
                 team2Points = 0;
                 team1Score.setText("0");
                 team2Score.setText("0");
-                // Check if team2 wins the match
                 if (team2Sets == setsToWin) {
                     String team1Name = ((TextView) findViewById(R.id.team1_name)).getText().toString().trim();
                     String team2Name = ((TextView) findViewById(R.id.team2_name)).getText().toString().trim();
@@ -137,15 +128,15 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
                     String winner = team2Name;
 
                     GameHistory history = new GameHistory();
-                    history.team1Name = team1Name;
-                    history.team2Name = team2Name;
-                    history.team1Score = team1Sets;
-                    history.team2Score = team2Sets;
-                    history.team1Sets = team1Sets;
-                    history.team2Sets = team2Sets;
-                    history.sportType = "Sepak Takraw";
-                    history.date = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
-                    history.winner = winner;
+                    history.setTeam1Name(team1Name);
+                    history.setTeam2Name(team2Name);
+                    history.setTeam1Score(team1Sets);
+                    history.setTeam2Score(team2Sets);
+                    history.setTeam1Sets(team1Sets);
+                    history.setTeam2Sets(team2Sets);
+                    history.setSportType("Sepak Takraw");
+                    history.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date()));
+                    history.setWinner(winner);
 
                     SharedPreferences prefs = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE);
                     Gson gson = new Gson();
@@ -168,15 +159,6 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
                 team2Score.setText(String.valueOf(team2Points));
             }
         });
-
-        //updateRoundCounter();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // Reset to portrait when exiting the activity
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     private void updateRoundCounter() {
@@ -195,18 +177,4 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
         team2SetsView.setText("0");
         updateRoundCounter();
     }
-
-    private boolean isMatchOver() {
-        // A team wins if it reaches setsToWin and the other team cannot catch up
-        if (team1Sets >= setsToWin || team2Sets >= setsToWin) {
-            return true;
-        }
-        // No one can catch up anymore
-        if (team1Sets + team2Sets >= totalSets) {
-            return true;
-        }
-        return false;
-    }
-
-
 }
