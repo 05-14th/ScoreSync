@@ -3,6 +3,7 @@ package com.scoresync.scoresync2;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
     private int totalSets = 5;
     private int setsToWin = 3;
     private TextView bestOfCounter;
+    private boolean isSwapped = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,38 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
         Button plusTeam2 = findViewById(R.id.plus_team2);
         Button minusTeam2 = findViewById(R.id.minus_team2);
 
+        // Swap button logic
+        ImageButton swapButton = findViewById(R.id.swap_button);
+        swapButton.setOnClickListener(v -> {
+            // Swap team names
+            TextView team1NameView = findViewById(R.id.team1_name);
+            TextView team2NameView = findViewById(R.id.team2_name);
+            CharSequence tempName = team1NameView.getText();
+            team1NameView.setText(team2NameView.getText());
+            team2NameView.setText(tempName);
+
+            // Swap scores
+            CharSequence tempScore = team1Score.getText();
+            team1Score.setText(team2Score.getText());
+            team2Score.setText(tempScore);
+
+            // Swap sets
+            CharSequence tempSets = team1SetsView.getText();
+            team1SetsView.setText(team2SetsView.getText());
+            team2SetsView.setText(tempSets);
+
+            // Swap internal variables
+            int tempPoints = team1Points;
+            team1Points = team2Points;
+            team2Points = tempPoints;
+
+            int tempSetsInt = team1Sets;
+            team1Sets = team2Sets;
+            team2Sets = tempSetsInt;
+
+            isSwapped = !isSwapped;
+        });
+
         plusTeam1.setOnClickListener(v -> {
             team1Points++;
             team1Score.setText(String.valueOf(team1Points));
@@ -70,33 +104,8 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
                 team1Score.setText("0");
                 team2Score.setText("0");
                 if (team1Sets == setsToWin) {
-                    String team1Name = ((TextView) findViewById(R.id.team1_name)).getText().toString().trim();
-                    String team2Name = ((TextView) findViewById(R.id.team2_name)).getText().toString().trim();
-                    if (team1Name.isEmpty()) team1Name = "Team 1";
-                    if (team2Name.isEmpty()) team2Name = "Team 2";
-                    String winner = team1Name;
-
-                    GameHistory history = new GameHistory();
-                    history.setTeam1Name(team1Name);
-                    history.setTeam2Name(team2Name);
-                    history.setTeam1Score(team1Sets);
-                    history.setTeam2Score(team2Sets);
-                    history.setTeam1Sets(team1Sets);
-                    history.setTeam2Sets(team2Sets);
-                    history.setSportType("Sepak Takraw");
-                    history.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date()));
-                    history.setWinner(winner);
-
-                    SharedPreferences prefs = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE);
-                    Gson gson = new Gson();
-                    String json = prefs.getString("GAME_HISTORY_LIST", "[]");
-                    Type type = new com.google.gson.reflect.TypeToken<ArrayList<GameHistory>>(){}.getType();
-                    ArrayList<GameHistory> historyList = gson.fromJson(json, type);
-                    if (historyList == null) historyList = new ArrayList<>();
-                    historyList.add(history);
-                    prefs.edit().putString("GAME_HISTORY_LIST", gson.toJson(historyList)).apply();
-
-                    Toast.makeText(this, winner + " wins the match!", Toast.LENGTH_LONG).show();
+                    saveGameHistory(true);
+                    Toast.makeText(this, getCurrentWinnerName(true) + " wins the match!", Toast.LENGTH_LONG).show();
                     resetScoreboard(team1Score, team2Score, team1SetsView, team2SetsView);
                 }
             }
@@ -121,33 +130,8 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
                 team1Score.setText("0");
                 team2Score.setText("0");
                 if (team2Sets == setsToWin) {
-                    String team1Name = ((TextView) findViewById(R.id.team1_name)).getText().toString().trim();
-                    String team2Name = ((TextView) findViewById(R.id.team2_name)).getText().toString().trim();
-                    if (team1Name.isEmpty()) team1Name = "Team 1";
-                    if (team2Name.isEmpty()) team2Name = "Team 2";
-                    String winner = team2Name;
-
-                    GameHistory history = new GameHistory();
-                    history.setTeam1Name(team1Name);
-                    history.setTeam2Name(team2Name);
-                    history.setTeam1Score(team1Sets);
-                    history.setTeam2Score(team2Sets);
-                    history.setTeam1Sets(team1Sets);
-                    history.setTeam2Sets(team2Sets);
-                    history.setSportType("Sepak Takraw");
-                    history.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date()));
-                    history.setWinner(winner);
-
-                    SharedPreferences prefs = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE);
-                    Gson gson = new Gson();
-                    String json = prefs.getString("GAME_HISTORY_LIST", "[]");
-                    Type type = new com.google.gson.reflect.TypeToken<ArrayList<GameHistory>>(){}.getType();
-                    ArrayList<GameHistory> historyList = gson.fromJson(json, type);
-                    if (historyList == null) historyList = new ArrayList<>();
-                    historyList.add(history);
-                    prefs.edit().putString("GAME_HISTORY_LIST", gson.toJson(historyList)).apply();
-
-                    Toast.makeText(this, winner + " wins the match!", Toast.LENGTH_LONG).show();
+                    saveGameHistory(false);
+                    Toast.makeText(this, getCurrentWinnerName(false) + " wins the match!", Toast.LENGTH_LONG).show();
                     resetScoreboard(team1Score, team2Score, team1SetsView, team2SetsView);
                 }
             }
@@ -176,5 +160,60 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
         team1SetsView.setText("0");
         team2SetsView.setText("0");
         updateRoundCounter();
+    }
+
+    // Helper to get the correct winner name based on swap state and which team won
+    private String getCurrentWinnerName(boolean leftWon) {
+        TextView team1NameView = findViewById(R.id.team1_name);
+        TextView team2NameView = findViewById(R.id.team2_name);
+        String leftName = team1NameView.getText().toString().trim();
+        String rightName = team2NameView.getText().toString().trim();
+        if (leftName.isEmpty()) leftName = "Team 1";
+        if (rightName.isEmpty()) rightName = "Team 2";
+        if (!isSwapped) {
+            return leftWon ? leftName : rightName;
+        } else {
+            return leftWon ? rightName : leftName;
+        }
+    }
+
+    // Save game history with correct team positions based on swap state
+    private void saveGameHistory(boolean leftWon) {
+        TextView team1NameView = findViewById(R.id.team1_name);
+        TextView team2NameView = findViewById(R.id.team2_name);
+        String leftName = team1NameView.getText().toString().trim();
+        String rightName = team2NameView.getText().toString().trim();
+        if (leftName.isEmpty()) leftName = "Team 1";
+        if (rightName.isEmpty()) rightName = "Team 2";
+
+        GameHistory history = new GameHistory();
+        if (!isSwapped) {
+            history.setTeam1Name(leftName);
+            history.setTeam2Name(rightName);
+            history.setTeam1Score(team1Sets);
+            history.setTeam2Score(team2Sets);
+            history.setTeam1Sets(team1Sets);
+            history.setTeam2Sets(team2Sets);
+            history.setWinner(leftWon ? leftName : rightName);
+        } else {
+            history.setTeam1Name(rightName);
+            history.setTeam2Name(leftName);
+            history.setTeam1Score(team2Sets);
+            history.setTeam2Score(team1Sets);
+            history.setTeam1Sets(team2Sets);
+            history.setTeam2Sets(team1Sets);
+            history.setWinner(leftWon ? rightName : leftName);
+        }
+        history.setSportType("Sepak Takraw");
+        history.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date()));
+
+        SharedPreferences prefs = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = prefs.getString("GAME_HISTORY_LIST", "[]");
+        Type type = new com.google.gson.reflect.TypeToken<ArrayList<GameHistory>>(){}.getType();
+        ArrayList<GameHistory> historyList = gson.fromJson(json, type);
+        if (historyList == null) historyList = new ArrayList<>();
+        historyList.add(history);
+        prefs.edit().putString("GAME_HISTORY_LIST", gson.toJson(historyList)).apply();
     }
 }
