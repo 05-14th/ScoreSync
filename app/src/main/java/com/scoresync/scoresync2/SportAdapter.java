@@ -1,7 +1,5 @@
 package com.scoresync.scoresync2;
 
-import static com.google.android.material.internal.ContextUtils.getActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,8 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -73,7 +69,7 @@ public class SportAdapter extends RecyclerView.Adapter<SportAdapter.SportViewHol
                 context.startActivity(intent);
             }
             else if ("sepak takraw".equals(sportName)) {
-                Intent intent = new Intent(context, SepakTakraw.class);
+                Intent intent = new Intent(context, SepakTakraw_Scoreboard.class);
                 context.startActivity(intent);
             }
             else {

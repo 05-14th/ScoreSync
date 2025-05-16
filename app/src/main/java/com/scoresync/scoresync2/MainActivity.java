@@ -1,10 +1,7 @@
 package com.scoresync.scoresync2;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //reset values
+        getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE)
+                .edit()
+                .clear() // This removes all saved custom values
+                .apply();
+
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -83,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void LoadCustomClick(View v) {
-        startActivity(new Intent(this, Custimization.class));
+        startActivity(new Intent(this, Customization.class));
     }
 
     public void LoadBoardClick(View v) {
