@@ -32,6 +32,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/best_of_counter"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -95,7 +96,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/sets_layout"
         app:layout_constraintEnd_toStartOf="@+id/sets_layout"
         app:layout_constraintHorizontal_bias="0.504"
@@ -103,12 +103,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
-        <Button
-            android:id="@+id/plus_team1"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/add" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/plus_team1"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/add" />
+
+            <Button
+                android:id="@+id/minus_team1"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/minus" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -134,6 +147,7 @@
                 android:textColor="#00FF00"
                 android:textSize="48sp" />
         </LinearLayout>
+
     </LinearLayout>
 
     <!-- Bottom Controls (Right Side - Shuffle) -->
@@ -176,12 +190,26 @@
                 android:textSize="48sp" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/plus_team2"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/add" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/plus_team2"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/add" />
+
+            <Button
+                android:id="@+id/minus_team2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/minus" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -271,12 +299,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/shuffle_button"
+        android:id="@+id/swap_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/swap"
@@ -290,6 +319,7 @@
         android:layout_width="187dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
         android:text="Players Action"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/addPlayersButton"
@@ -301,9 +331,11 @@
         android:layout_width="187dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
         android:text="Add Player"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

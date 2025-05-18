@@ -436,7 +436,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:inputType="number"
-                    android:text="10"
+                    android:text="21"
                     android:gravity="center"/>
 
                 <Button
@@ -551,7 +551,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:inputType="number"
-                    android:text="10"
+                    android:text="21"
                     android:gravity="center"/>
 
                 <Button
@@ -598,7 +598,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:inputType="number"
-                    android:text="10"
+                    android:text="5"
                     android:gravity="center"/>
 
                 <Button

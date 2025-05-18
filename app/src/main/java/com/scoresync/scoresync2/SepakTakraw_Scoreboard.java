@@ -22,12 +22,14 @@ import java.lang.reflect.Type;
 
 public class SepakTakraw_Scoreboard extends AppCompatActivity {
 
-    private int sepakPointsPerSet = 10;
+    private int sepakPointsPerSet = 21; // default score and set setting for sepak takraw
+    private int sepakPointCap = 25;
+    private int totalSets = 3;
+    private int setsToWin = 2;
     private int team1Points = 0, team2Points = 0;
     private int team1Sets = 0, team2Sets = 0;
     private TextView roundCounter;
-    private int totalSets = 5;
-    private int setsToWin = 3;
+
     private TextView bestOfCounter;
     private boolean isSwapped = false;
 
@@ -40,15 +42,16 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
         roundCounter = findViewById(R.id.round_counter);
         bestOfCounter = findViewById(R.id.best_of_counter);
 
+        // Use defaults if not set in preferences
         totalSets = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE)
-                .getInt("SEPAK_TOTAL_SETS", 5);
+                .getInt("SEPAK_TOTAL_SETS", 3);
         setsToWin = (totalSets / 2) + 1;
         bestOfCounter.setText(String.valueOf(totalSets));
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         sepakPointsPerSet = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE)
-                .getInt("SEPAK_POINTS_PER_SET", 10);
+                .getInt("SEPAK_POINTS_PER_SET", 21);
 
         TextView team1Score = findViewById(R.id.team1_score);
         TextView team2Score = findViewById(R.id.team2_score);
@@ -95,7 +98,7 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
         plusTeam1.setOnClickListener(v -> {
             team1Points++;
             team1Score.setText(String.valueOf(team1Points));
-            if (team1Points >= sepakPointsPerSet) {
+            if (isSetWon(team1Points, team2Points)) {
                 team1Sets++;
                 team1SetsView.setText(String.valueOf(team1Sets));
                 updateRoundCounter();
@@ -121,7 +124,7 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
         plusTeam2.setOnClickListener(v -> {
             team2Points++;
             team2Score.setText(String.valueOf(team2Points));
-            if (team2Points >= sepakPointsPerSet) {
+            if (isSetWon(team2Points, team1Points)) {
                 team2Sets++;
                 team2SetsView.setText(String.valueOf(team2Sets));
                 updateRoundCounter();
@@ -143,6 +146,17 @@ public class SepakTakraw_Scoreboard extends AppCompatActivity {
                 team2Score.setText(String.valueOf(team2Points));
             }
         });
+    }
+
+    private boolean isSetWon(int thisTeamPoints, int otherTeamPoints) {
+        // Win by 2, unless cap is reached
+        if (thisTeamPoints >= sepakPointsPerSet && (thisTeamPoints - otherTeamPoints) >= 2) {
+            return true;
+        }
+        if (thisTeamPoints == sepakPointCap) {
+            return true;
+        }
+        return false;
     }
 
     private void updateRoundCounter() {

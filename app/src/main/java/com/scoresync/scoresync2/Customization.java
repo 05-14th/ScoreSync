@@ -177,7 +177,7 @@ public class Customization extends AppCompatActivity {
         int volleyballTieBreakerValue = getCurrentValue(volleyballTieBreaker);
         int volleyballTotalSetsValue = getCurrentValue(volleyballTotalSets);
 
-        // Sepak Takraw settings
+        // Sepak Takraw score sync settings settings
         int SepakPointsPerSetValue = getCurrentValue(SepakPointsPerSet);
         int SepakTotalSetsValue = getCurrentValue(SepakTotalSets);
         getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE)
@@ -186,9 +186,14 @@ public class Customization extends AppCompatActivity {
                 .putInt("SEPAK_TOTAL_SETS", SepakTotalSetsValue)
                 .apply();
 
-
+        // Badminton score sync settings
         int badmintonPointsPerSetValue = getCurrentValue(badmintonPointsPerSet);
         int badmintonRoundsPerMatchValue = getCurrentValue(badmintonRoundsPerMatch);
+        getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE)
+                .edit()
+                .putInt("BADMINTON_POINTS_PER_SET", badmintonPointsPerSetValue)
+                .putInt("BADMINTON_TOTAL_SETS", badmintonRoundsPerMatchValue)
+                .apply();
 
         // Here you would typically save these values to SharedPreferences or database
         // For now we'll just show a toast
