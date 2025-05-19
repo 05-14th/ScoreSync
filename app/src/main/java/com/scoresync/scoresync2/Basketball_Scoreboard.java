@@ -1,5 +1,6 @@
 package com.scoresync.scoresync2;
 
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
@@ -14,9 +15,19 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.scoresync.scoresync2.model.GameHistory;
+
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
+import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class Basketball_Scoreboard extends AppCompatActivity {
 
@@ -312,6 +323,52 @@ public class Basketball_Scoreboard extends AppCompatActivity {
         playPeriodEndSound();
     }
 
+    private String getCurrentWinnerName(boolean leftWon) {
+        String leftName = team1Label.getText().toString().trim();
+        String rightName = team2Label.getText().toString().trim();
+        if (leftName.isEmpty()) leftName = "Team 1";
+        if (rightName.isEmpty()) rightName = "Team 2";
+        if (!isShuffled) {
+            return leftWon ? leftName : rightName;
+        } else {
+            return leftWon ? rightName : leftName;
+        }
+    }
+
+    private void saveGameHistory(boolean leftWon) {
+        String leftName = team1Label.getText().toString().trim();
+        String rightName = team2Label.getText().toString().trim();
+        if (leftName.isEmpty()) leftName = "Team 1";
+        if (rightName.isEmpty()) rightName = "Team 2";
+
+        GameHistory history = new GameHistory();
+        if (!isShuffled) {
+            history.setTeam1Name(leftName);
+            history.setTeam2Name(rightName);
+            history.setTeam1Score(team1Score);
+            history.setTeam2Score(team2Score);
+            history.setWinner(leftWon ? leftName : rightName);
+        } else {
+            history.setTeam1Name(rightName);
+            history.setTeam2Name(leftName);
+            history.setTeam1Score(team2Score);
+            history.setTeam2Score(team1Score);
+            history.setWinner(leftWon ? rightName : leftName);
+        }
+        history.setSportType("Basketball");
+        history.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date()));
+
+        SharedPreferences prefs = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = prefs.getString("GAME_HISTORY_LIST", "[]");
+        Type type = new TypeToken<ArrayList<GameHistory>>(){}.getType();
+        ArrayList<GameHistory> historyList = gson.fromJson(json, type);
+        if (historyList == null) historyList = new ArrayList<>();
+        historyList.add(history);
+        prefs.edit().putString("GAME_HISTORY_LIST", gson.toJson(historyList)).apply();
+    }
+
+    // Modify the timer's onFinish method to handle game end
     private void startTimer() {
         timer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
@@ -328,7 +385,7 @@ public class Basketball_Scoreboard extends AppCompatActivity {
 
                 // Handle period end
                 period++;
-                if (period <= 4) { // Standard basketball has 4 periods
+                if (period <= 4) {
                     updatePeriodDisplay();
                     Toast.makeText(Basketball_Scoreboard.this,
                             "Period " + (period-1) + " ended!",
@@ -338,8 +395,13 @@ public class Basketball_Scoreboard extends AppCompatActivity {
                     timeLeftInMillis = 720000; // 12 minutes
                     updateTimerDisplay();
                 } else {
+                    // Game over - determine winner and save history
+                    boolean team1Won = team1Score > team2Score;
+                    saveGameHistory(team1Won);
+                    String winnerName = getCurrentWinnerName(team1Won);
+
                     Toast.makeText(Basketball_Scoreboard.this,
-                            "Game Over!",
+                            "Game Over! " + winnerName + " wins!",
                             Toast.LENGTH_LONG).show();
                 }
             }
