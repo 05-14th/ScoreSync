@@ -100,6 +100,14 @@
         app:layout_constraintVertical_bias="1.0">
 
         <Button
+            android:id="@+id/minus_team1v"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/minus" />
+
+        <Button
             android:id="@+id/plus_team1"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -180,6 +188,14 @@
             android:layout_height="60dp"
             android:layout_marginStart="10dp"
             android:background="@drawable/add" />
+
+        <Button
+            android:id="@+id/minus_team2v"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/minus" />
 
     </LinearLayout>
 

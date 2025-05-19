@@ -2,6 +2,7 @@ package com.scoresync.scoresync2;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -177,44 +178,53 @@ public class Customization extends AppCompatActivity {
         int volleyballTieBreakerValue = getCurrentValue(volleyballTieBreaker);
         int volleyballTotalSetsValue = getCurrentValue(volleyballTotalSets);
 
-        // Sepak Takraw score sync settings settings
-        int SepakPointsPerSetValue = getCurrentValue(SepakPointsPerSet);
-        int SepakTotalSetsValue = getCurrentValue(SepakTotalSets);
-        getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE)
-                .edit()
-                .putInt("SEPAK_POINTS_PER_SET", SepakPointsPerSetValue)
-                .putInt("SEPAK_TOTAL_SETS", SepakTotalSetsValue)
-                .apply();
+        int sepakPointsPerSetValue = getCurrentValue(SepakPointsPerSet);
+        int sepakTotalSetsValue = getCurrentValue(SepakTotalSets);
 
-        // Badminton score sync settings
         int badmintonPointsPerSetValue = getCurrentValue(badmintonPointsPerSet);
         int badmintonRoundsPerMatchValue = getCurrentValue(badmintonRoundsPerMatch);
-        getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE)
-                .edit()
-                .putInt("BADMINTON_POINTS_PER_SET", badmintonPointsPerSetValue)
-                .putInt("BADMINTON_TOTAL_SETS", badmintonRoundsPerMatchValue)
-                .apply();
 
-        // Here you would typically save these values to SharedPreferences or database
-        // For now we'll just show a toast
+        // Save all to SharedPreferences
+        SharedPreferences.Editor editor = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE).edit();
+
+        // Basketball
+        editor.putInt("BASKETBALL_TIME", basketballTimeValue);
+        editor.putInt("BASKETBALL_OVERTIME", basketballOvertimeValue);
+        editor.putInt("BASKETBALL_PERIODS", basketballPeriodsValue);
+
+        // Volleyball
+        editor.putInt("VOLLEYBALL_POINTS_PER_SET", volleyballPointsPerSetValue);
+        editor.putInt("VOLLEYBALL_TIE_BREAKER", volleyballTieBreakerValue);
+        editor.putInt("VOLLEYBALL_TOTAL_SETS", volleyballTotalSetsValue);
+
+        // Sepak Takraw
+        editor.putInt("SEPAK_POINTS_PER_SET", sepakPointsPerSetValue);
+        editor.putInt("SEPAK_TOTAL_SETS", sepakTotalSetsValue);
+
+        // Badminton
+        editor.putInt("BADMINTON_POINTS_PER_SET", badmintonPointsPerSetValue);
+        editor.putInt("BADMINTON_TOTAL_SETS", badmintonRoundsPerMatchValue);
+
+        // Commit all changes
+        editor.apply();
+
+        // Display a confirmation message
         String message = "Settings saved:\n" +
-                "Basevolban - Time: " + basketballTimeValue +
+                "Basketball - Time: " + basketballTimeValue +
                 ", Overtime: " + basketballOvertimeValue +
                 ", Periods: " + basketballPeriodsValue + "\n" +
                 "Volleyball - Points: " + volleyballPointsPerSetValue +
                 ", Tie Breaker: " + volleyballTieBreakerValue +
                 ", Total Sets: " + volleyballTotalSetsValue + "\n" +
-                "Sepak - Points Per Set: " + SepakPointsPerSetValue +
-                ", Total Sets: " + SepakTotalSetsValue + "\n" +
-                "Badminton - Points Per set: " + badmintonPointsPerSetValue +
-                ", Rounds per match: " + badmintonRoundsPerMatchValue;
-
-
-
+                "Sepak Takraw - Points Per Set: " + sepakPointsPerSetValue +
+                ", Total Sets: " + sepakTotalSetsValue + "\n" +
+                "Badminton - Points Per Set: " + badmintonPointsPerSetValue +
+                ", Rounds per Match: " + badmintonRoundsPerMatchValue;
 
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 
         // Close the activity after saving
         finish();
     }
+
 }
