@@ -1014,7 +1014,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Points Per Set:"/>
+                android:text="Minutes per Game:" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -1023,74 +1023,36 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/chess_minus"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_marginEnd="4dp"
                     android:background="@drawable/minus"
                     android:minWidth="0dp"
-                    android:padding="4dp"
-                    android:layout_marginEnd="4dp"/>
+                    android:padding="4dp" />
 
                 <EditText
+                    android:id="@+id/chess_minutes"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:inputType="number"
-                    android:text="10"
-                    android:gravity="center"/>
+                    android:text="10" />
 
                 <Button
+                    android:id="@+id/chess_plus"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_marginStart="4dp"
                     android:background="@drawable/addblack"
-                    android:padding="4dp"
-                    android:layout_marginStart="4dp"/>
+                    android:padding="4dp" />
             </LinearLayout>
         </LinearLayout>
 
         <!-- Round per match -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Round per match:"/>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <Button
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/minus"
-                    android:padding="4dp"
-                    android:layout_marginEnd="4dp"/>
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:inputType="number"
-                    android:text="5"
-                    android:gravity="center"/>
-
-                <Button
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/addblack"
-                    android:padding="4dp"
-                    android:layout_marginStart="4dp"/>
-            </LinearLayout>
-        </LinearLayout>
 
 
-        </LinearLayout>
+    </LinearLayout>
     </ScrollView>
 </LinearLayout>

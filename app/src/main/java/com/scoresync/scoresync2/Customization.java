@@ -31,6 +31,7 @@ public class Customization extends AppCompatActivity {
     // Badminton settings
     private EditText badmintonPointsPerSet;
     private EditText badmintonRoundsPerMatch;
+    private EditText chessMinutes;
 
 
     @SuppressLint("MissingInflatedId")
@@ -72,6 +73,9 @@ public class Customization extends AppCompatActivity {
         // Badminton settings
         badmintonPointsPerSet = findViewById(R.id.badminton_points_per_set);
         badmintonRoundsPerMatch = findViewById(R.id.badminton_rounds_per_match);
+
+        // Chess settings
+        chessMinutes = findViewById(R.id.chess_minutes);
     }
 
     private void setupButtonListeners() {
@@ -144,6 +148,12 @@ public class Customization extends AppCompatActivity {
                 findViewById(R.id.badminton_rounds_plus),
                 badmintonRoundsPerMatch
         );
+
+        setupPlusMinusButtons(
+                findViewById(R.id.chess_minus),
+                findViewById(R.id.chess_plus),
+                chessMinutes
+        );
     }
 
     private void setupPlusMinusButtons(Button minusButton, Button plusButton, EditText valueEditText) {
@@ -184,6 +194,8 @@ public class Customization extends AppCompatActivity {
         int badmintonPointsPerSetValue = getCurrentValue(badmintonPointsPerSet);
         int badmintonRoundsPerMatchValue = getCurrentValue(badmintonRoundsPerMatch);
 
+        int chessMinutesPerMatch = getCurrentValue(chessMinutes);
+
         // Save all to SharedPreferences
         SharedPreferences.Editor editor = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE).edit();
 
@@ -205,6 +217,9 @@ public class Customization extends AppCompatActivity {
         editor.putInt("BADMINTON_POINTS_PER_SET", badmintonPointsPerSetValue);
         editor.putInt("BADMINTON_TOTAL_SETS", badmintonRoundsPerMatchValue);
 
+        // Chess
+        editor.putInt("CHESS_MINUTES_PER_MATCH", chessMinutesPerMatch);
+
         // Commit all changes
         editor.apply();
 
@@ -219,7 +234,8 @@ public class Customization extends AppCompatActivity {
                 "Sepak Takraw - Points Per Set: " + sepakPointsPerSetValue +
                 ", Total Sets: " + sepakTotalSetsValue + "\n" +
                 "Badminton - Points Per Set: " + badmintonPointsPerSetValue +
-                ", Rounds per Match: " + badmintonRoundsPerMatchValue;
+                ", Rounds per Match: " + badmintonRoundsPerMatchValue +
+                ", Chess minutes per Match: " + chessMinutesPerMatch;
 
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 

@@ -58,7 +58,13 @@ public class Basketball_Scoreboard extends AppCompatActivity {
     private int team1Fouls = 0;
     private int team2Fouls = 0;
     private int period = 1;
+    private int setPeriod;
     private boolean isShuffled = false;
+    private int overtime = 1;
+    private int setTime;
+
+    private boolean isInOvertime = false;
+    private int currentOvertimes = 0;
 
     // 🔑 Declare a gameId field so it can be reused across dialogs/features
     private String gameId;
@@ -73,6 +79,16 @@ public class Basketball_Scoreboard extends AppCompatActivity {
 
         // 👇 Generate a unique gameId (timestamp-based or UUID also works)
         gameId = "game_" + System.currentTimeMillis();
+
+        setTime = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE)
+                .getInt("BASKETBALL_TIME", 12);
+        setPeriod = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE)
+                .getInt("BASKETBALL_PERIODS", 4);
+        overtime = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE)
+                .getInt("BASKETBALL_OVERTIME", 1);
+
+        timeLeftInMillis = setTime * 60000;
+
 
         // Initialize views
         team1ScoreDisplay = findViewById(R.id.team1_score);
@@ -164,15 +180,6 @@ public class Basketball_Scoreboard extends AppCompatActivity {
 
             // Toggle the state
             isShuffled = !isShuffled;
-        });
-
-        periodCounter.setOnClickListener(v -> {
-            if (period < 4) {
-                period += 1;
-            } else {
-                period = 1;
-            }
-            periodCounter.setText(String.valueOf(period));  // Convert int to String
         });
     }
 
@@ -323,6 +330,10 @@ public class Basketball_Scoreboard extends AppCompatActivity {
         playPeriodEndSound();
     }
 
+    private boolean isOvertime() {
+        return period >= setPeriod && team1Score == team2Score;
+    }
+
     private String getCurrentWinnerName(boolean leftWon) {
         String leftName = team1Label.getText().toString().trim();
         String rightName = team2Label.getText().toString().trim();
@@ -368,7 +379,7 @@ public class Basketball_Scoreboard extends AppCompatActivity {
         prefs.edit().putString("GAME_HISTORY_LIST", gson.toJson(historyList)).apply();
     }
 
-    // Modify the timer's onFinish method to handle game end
+
     private void startTimer() {
         timer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
@@ -383,26 +394,58 @@ public class Basketball_Scoreboard extends AppCompatActivity {
                 startTimerButton.setImageResource(R.drawable.play);
                 playPeriodEndSound();
 
-                // Handle period end
-                period++;
-                if (period <= 4) {
-                    updatePeriodDisplay();
+                if (isOvertime()) {
+                    // Transition to overtime
+                    isInOvertime = true;
+                    currentOvertimes++;
+                    timeLeftInMillis = overtime * 60000L; // 5 minutes
+
+                    updatePeriodDisplay(); // Will show "OT1", "OT2", etc.
                     Toast.makeText(Basketball_Scoreboard.this,
-                            "Period " + (period-1) + " ended!",
+                            "Overtime " + currentOvertimes + " started!",
                             Toast.LENGTH_LONG).show();
 
-                    // Reset timer for next period
-                    timeLeftInMillis = 720000; // 12 minutes
-                    updateTimerDisplay();
-                } else {
-                    // Game over - determine winner and save history
+                    // Auto-start overtime timer
+                    startTimer();
+                    return;
+                }
+                else if (isInOvertime && team1Score == team2Score) {
+                    // Additional overtime needed (score still tied after OT)
+                    currentOvertimes++;
+                    timeLeftInMillis = overtime * 60000;
+
+                    updatePeriodDisplay();
+                    Toast.makeText(Basketball_Scoreboard.this,
+                            "Overtime " + currentOvertimes + " started!",
+                            Toast.LENGTH_LONG).show();
+
+                    startTimer();
+                    return;
+                }
+
+                // Handle normal period progression
+                if (period < setPeriod) {
+                    period++;
+                    timeLeftInMillis = setTime * 60000L; // Reset to 12 minutes
+                    updatePeriodDisplay();
+
+                    Toast.makeText(Basketball_Scoreboard.this,
+                            "Period " + period + " ended!",
+                            Toast.LENGTH_LONG).show();
+                }
+                // Game over condition
+                else {
                     boolean team1Won = team1Score > team2Score;
                     saveGameHistory(team1Won);
-                    String winnerName = getCurrentWinnerName(team1Won);
+                    String winnerName = (String) (team1Won ? team1Label.getText() : team1Label.getText());
 
                     Toast.makeText(Basketball_Scoreboard.this,
                             "Game Over! " + winnerName + " wins!",
                             Toast.LENGTH_LONG).show();
+
+                    // Reset overtime state
+                    isInOvertime = false;
+                    currentOvertimes = 0;
                 }
             }
         }.start();
