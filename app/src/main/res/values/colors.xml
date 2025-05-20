@@ -6,4 +6,6 @@
     <color name="red">#B22222</color>
     <color name="green">#2E8B57</color>
     <color name="blue">#4682B4</color>
+    <color name="active_player">#5D5C5C</color>
+    <color name="inactive_player">#3D3C3C</color>
 </resources>
