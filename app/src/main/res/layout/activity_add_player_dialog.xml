@@ -111,6 +111,21 @@
         </LinearLayout>
 
         <!-- Spinner Select Team -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/updateTeamsButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingHorizontal="12dp"
+                android:text="Update Teams" />
+        </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -228,12 +243,6 @@
                 android:padding="8dp"
                 android:layout_marginEnd="8dp" />
 
-            <Button
-                android:id="@+id/updateTeamsButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Update Teams"
-                android:paddingHorizontal="12dp" />
         </LinearLayout>
 
         <!-- Add Player Button -->
@@ -247,31 +256,5 @@
             android:paddingHorizontal="24dp" />
 
         <!-- Bottom Buttons -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <Button
-                android:id="@+id/closeButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Close"
-                android:layout_marginEnd="4dp"
-                android:backgroundTint="#f44336"
-                android:textColor="@android:color/white" />
-
-            <Button
-                android:id="@+id/saveButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Save"
-                android:layout_marginStart="4dp"
-                android:backgroundTint="#4CAF50"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>

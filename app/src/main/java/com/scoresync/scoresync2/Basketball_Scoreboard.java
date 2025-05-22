@@ -1,5 +1,7 @@
 package com.scoresync.scoresync2;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.media.AudioAttributes;
@@ -87,7 +89,10 @@ public class Basketball_Scoreboard extends AppCompatActivity {
         overtime = getSharedPreferences("ScoreSyncPrefs", MODE_PRIVATE)
                 .getInt("BASKETBALL_OVERTIME", 1);
 
-        timeLeftInMillis = setTime * 60000;
+        SharedPreferences.Editor editor = getSharedPreferences("currentGame", MODE_PRIVATE).edit();
+        editor.putString("game_id", gameId).apply();
+
+        timeLeftInMillis = setTime * 60000L;
 
 
         // Initialize views
@@ -122,7 +127,7 @@ public class Basketball_Scoreboard extends AppCompatActivity {
         // Add Player Button
         Button addPlayerButton = findViewById(R.id.add_player_button);
         addPlayerButton.setOnClickListener(v -> {
-            AddPlayerDialog dialog = new AddPlayerDialog();
+            AddPlayerDialog dialog = new AddPlayerDialog(this);
             dialog.setGameId(gameId);
             dialog.show(getSupportFragmentManager(), "AddPlayerDialog");
         });
@@ -332,18 +337,6 @@ public class Basketball_Scoreboard extends AppCompatActivity {
 
     private boolean isOvertime() {
         return period >= setPeriod && team1Score == team2Score;
-    }
-
-    private String getCurrentWinnerName(boolean leftWon) {
-        String leftName = team1Label.getText().toString().trim();
-        String rightName = team2Label.getText().toString().trim();
-        if (leftName.isEmpty()) leftName = "Team 1";
-        if (rightName.isEmpty()) rightName = "Team 2";
-        if (!isShuffled) {
-            return leftWon ? leftName : rightName;
-        } else {
-            return leftWon ? rightName : leftName;
-        }
     }
 
     private void saveGameHistory(boolean leftWon) {
