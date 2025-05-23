@@ -70,6 +70,7 @@ public class Basketball_Scoreboard extends AppCompatActivity {
 
     // 🔑 Declare a gameId field so it can be reused across dialogs/features
     private String gameId;
+    private String gameType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +130,7 @@ public class Basketball_Scoreboard extends AppCompatActivity {
         addPlayerButton.setOnClickListener(v -> {
             AddPlayerDialog dialog = new AddPlayerDialog(this);
             dialog.setGameId(gameId);
+            dialog.setGameType("ADD PLAYER (BASKETBALL)");
             dialog.show(getSupportFragmentManager(), "AddPlayerDialog");
         });
 
@@ -467,8 +469,8 @@ public class Basketball_Scoreboard extends AppCompatActivity {
                         int team2Fouls = latestFoul.getLong("team2Fouls").intValue();
 
                         runOnUiThread(() -> {
-                            team1FoulDisplay.setText(String.valueOf(team1Fouls));
-                            team2FoulDisplay.setText(String.valueOf(team2Fouls));
+                            team1FoulDisplay.setText("Fouls: " + team1Fouls);
+                            team2FoulDisplay.setText("Fouls: " + team2Fouls);
                         });
                     }
                 })

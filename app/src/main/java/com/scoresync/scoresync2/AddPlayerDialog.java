@@ -43,6 +43,8 @@ public class AddPlayerDialog extends DialogFragment {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private int num = 1;
     private Context context;
+    private String gameType;
+    private TextView addLabel;
 
     public AddPlayerDialog(Context context) {
         this.context = context;
@@ -63,6 +65,9 @@ public class AddPlayerDialog extends DialogFragment {
         playerNameEditText = view.findViewById(R.id.playerNameEditText);
         teamSpinner = view.findViewById(R.id.teamSpinner);
         playersTable = view.findViewById(R.id.playerTable);
+        addLabel = view.findViewById(R.id.apTitle);
+
+        addLabel.setText(gameType);
 
         // Set up buttons
         Button updateTeamsButton = view.findViewById(R.id.updateTeamsButton);
@@ -255,5 +260,9 @@ public class AddPlayerDialog extends DialogFragment {
     }
     public void setGameId(String gameId) {
         this.gameId = gameId;
+    }
+
+    public void setGameType(String gameType) {
+        this.gameType = gameType;
     }
 }
